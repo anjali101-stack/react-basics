@@ -3,12 +3,22 @@ import "./index.css";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
+  const [limit , setLimit] = useState(5)
+
+
+  const HandleClick = () => {
+    setLimit(limit+5)
+
+    console.log("clicked")
+  }
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch(`https://fakestoreapi.com/products?limit=${limit}`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [limit]);
+
+
 
   return (
     <div className="product-container">
@@ -24,6 +34,8 @@ const Product = () => {
           </div>
         </div>
       ))}
+
+      <button className="buy-button" onClick={HandleClick}>Load More...</button>
     </div>
   );
 };
