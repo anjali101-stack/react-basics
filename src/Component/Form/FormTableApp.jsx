@@ -1,63 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const FormTableApp = () => {
-  const [formEntries, setFormEntries] = useState([]);
+  const [data, setData] = useState([]);
 
-  const handleSubmit = (e) => {
+  const Handlesubmit = (e) => {
     e.preventDefault();
+    let formdata = new FormData(e.target);
+    let entries = Object.fromEntries(formdata.entries());
+    
+    setData([...data, entries]);
 
-    // Use FormData to get form values
-    const formData = new FormData(e.target);
-    const newEntry = Object.fromEntries(formData.entries());
-
-    // Add new entry to the list
-    setFormEntries([...formEntries, newEntry]);
-
-    // Reset the form
     e.target.reset();
   };
 
+  const HandleDelete = (item) => {
+    let updatedDaat =  data.filter((i)=> i !== item)
+    setData(updatedDaat)
+    console.log(item, "this is from delete dunction")
+  
+  }
   return (
-    <div className="p-4">
-      <h2>Fill the Form</h2>
-      <form onSubmit={handleSubmit}>
+    <div>
+      <form onSubmit={Handlesubmit}>
         <div>
-          <label>Name: </label>
-          <input name="name" required />
-        </div>
-        <div>
-          <label>Email: </label>
-          <input name="email" type="email" required />
-        </div>
-        <div>
-          <label>Age: </label>
-          <input name="age" type="number" required />
+          <label>Name</label>
+          <input name="name" type="text" required />
         </div>
         <button type="submit">Submit</button>
       </form>
+      {data.length > 0 && (
+        <div>
+          <h1>Form data</h1>
 
-      {formEntries.length > 0 && (
-        <>
-          <h3>Submitted Data</h3>
-          <table border="1" cellPadding="5" style={{ marginTop: '1rem' }}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              {formEntries.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.name}</td>
-                  <td>{entry.email}</td>
-                  <td>{entry.age}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+          {
+           data.map((item , index) => (
+            <div key={index}> 
+            <h1>
+              {item.name}
+            </h1>
+            <button onClick={()=>HandleDelete(item)}>delete</button>
+            </div>
+           ))
+          }
+        </div>
       )}
     </div>
   );

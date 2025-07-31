@@ -4,13 +4,16 @@ import AppRoutes from './AppRoutes'
 import Form from './Component/Form/Form'
 import Product from './Component/API/Product'
 import DebouncedSearch from './Component/Debounce/DebouncedSearch '
+import FormTableApp from './Component/Form/FormTableApp'
 
 
 const App = () => {
   return (
     <>
-    <DebouncedSearch/>
+    {/* <DebouncedSearch/> */}
     {/* <Product/> */}
+    {/* <Form/> */}
+    <FormTableApp/>
    
     </>
     // <Router>
