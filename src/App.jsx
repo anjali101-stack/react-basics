@@ -5,19 +5,19 @@ import Form from './Component/Form/Form'
 import Product from './Component/API/Product'
 import DebouncedSearch from './Component/Debounce/DebouncedSearch '
 import FormTableApp from './Component/Form/FormTableApp'
-import ThrottleInput from './Component/Throttling/ThrottleInput'
+import MyContextProvider from './Context/MyContextProvider'
 
 
 const App = () => {
   return (
-    <>
-    <ThrottleInput/>
+    <MyContextProvider>
+    
     {/* <DebouncedSearch/> */}
     {/* <Product/> */}
-    {/* <Form/> */}
+    <Form/>
     {/* <FormTableApp/> */}
    
-    </>
+    </MyContextProvider>
     // <Router>
     //    {/* <AppRoutes/> */}
        

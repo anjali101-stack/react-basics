@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { MyContext } from "../../Context/MyContext";
 
 const Form = () => {
+  const { value, count, setCount } = useContext(MyContext);
+
   const [data, setData] = useState([]);
   const HandleSubmit = (e) => {
     e.preventDefault();
@@ -11,14 +14,38 @@ const Form = () => {
     // for (let pair of formData.entries()) {
     //   console.log(`${pair[0]}: ${pair[1]}`);
     // }
+
     console.log(formEntries, "Form submitted");
-    setData([...data, formEntries]);
+    const updatedData = [...data  , formEntries]
+    setData(updatedData);
+
+    localStorage.setItem("formData" ,   JSON.stringify(updatedData))
+    
 
     e.target.reset();
   };
+
+  useEffect(()=>{
+    let storedData = localStorage.getItem("formData")
+
+    if(storedData){
+      console.log(storedData, "this is stored data")
+      console.log(JSON.parse(storedData))
+      setData(JSON.parse(storedData))
+    }
+
+  },[])
+  const handleCount = () => {
+    setCount(count + 1);
+  };
   return (
     <>
-      <div>
+      <div >
+        
+        <h1>{value.value}</h1>
+        <h1>{count}</h1>
+
+        <button onClick={() => handleCount()}>Increment</button>
         <form onSubmit={HandleSubmit}>
           <div>
             <label>name :</label>
@@ -30,7 +57,7 @@ const Form = () => {
           </div>
           <div>
             <label>Phone number</label>
-            <input name="phone" type="number"/>
+            <input name="phone" type="number" />
           </div>
           <div>
             <label>Email :</label>
